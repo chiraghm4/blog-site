@@ -24,11 +24,14 @@ const deleteBlog = async (req, res) => {
     if(!blogID) return res.status(400).json({error: "no id provided"})
 
     try {
-        await BLOG.deleteOne({
+        const res = await BLOG.deleteOne({
             _id: blogID
         })
+        if(res.deletedCount == 0) {
+            return res.json({message: "blog already deleted"})
+        }
     } catch(err) {
-        console.log(err)
+        return res.status(400).json({error: "no blog found"})
     }
 
     return res.json({message: `blog deleted of id - ${blogID}`})
