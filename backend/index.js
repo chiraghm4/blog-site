@@ -1,12 +1,15 @@
 const express = require("express");
 const connectDB = require("./connect");
 const app = express();
+const dotenv = require('dotenv')
 const blogRouter = require('./routes/blogs')
 const commentRouter = require('./routes/comments')
 
-const PORT = 8001;
+dotenv.config();
 
-connectDB("mongodb://localhost:27017/blog-site")
+//mongodb://localhost:27017
+
+connectDB(`${process.env.MONGO_URI}/${process.env.DB_NAME}`)
   .then(() => {
     console.log("mongodb connected");
   })
@@ -20,7 +23,9 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
+console.log(process.env.PORT)
 
-app.listen(PORT, () => {
-  console.log(`listening to http://127.0.0.1:${PORT}`);
+
+app.listen(process.env.PORT, () => {
+  console.log(`listening to http://127.0.0.1:${process.env.PORT}`);
 });

@@ -1,9 +1,14 @@
 const BLOG = require('../../models/blogs')
 
+const getAllBlogs = async (req, res) => {
+    const blogs = await BLOG.find()
+    return res.json(blogs)
+}   
+
 const createNewBlog = async (req, res) => {
     const body = req.body
 
-    if(!body) return res.status(400).json({error: "empty blog"})
+    if(!body) return res.status(404).json({error: "blog body not found"})
 
     try{
         await BLOG.create({
@@ -31,10 +36,10 @@ const deleteBlog = async (req, res) => {
             return res.json({message: "blog already deleted"})
         }
     } catch(err) {
-        return res.status(400).json({error: "no blog found"})
+        return res.status(404).json({error: "no blog found"})
     }
 
     return res.json({message: `blog deleted of id - ${blogID}`})
 }
 
-module.exports = {createNewBlog, deleteBlog}
+module.exports = {getAllBlogs, createNewBlog, deleteBlog}
