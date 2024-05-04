@@ -1,6 +1,4 @@
 const COMMENT = require("../../models/comments");
-const BLOG = require("../../models/blogs");
-const { Types } = require("mongoose");
 
 const getAllComments = async (req, res) => {
   const response = await COMMENT.find();

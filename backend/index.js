@@ -4,6 +4,7 @@ const app = express();
 const dotenv = require('dotenv')
 const blogRouter = require('./routes/blogs')
 const commentRouter = require('./routes/comments')
+const cors = require('cors')
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ connectDB(`${process.env.MONGO_URI}/${process.env.DB_NAME}`)
   })
   .catch((err) => console.log(`error in mongo: ${err}`));
 
+app.use(cors({origin: true, credentials: true}));
 app.use(express.json());
 app.use("/blog", blogRouter)
 app.use("/comment", commentRouter)
