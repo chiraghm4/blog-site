@@ -10,6 +10,9 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    spaceID: {
+      type: String
+    }
     
   },
   { timestamps: true }
